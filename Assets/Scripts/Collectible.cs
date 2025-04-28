@@ -8,8 +8,7 @@ public class Collectible : MonoBehaviour
         {
             FindObjectOfType<GemCounterUI>().AddGem();
             FindObjectOfType<AudioManager>().PlayGem();
-            Destroy(gameObject); // LAST thing you call
+            Destroy(gameObject);
         }
     }
 }
-

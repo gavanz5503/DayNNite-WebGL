@@ -7,6 +7,8 @@ TagManager:
   - MovingPlatform
   - Gem
   - Enemy
+  - CheckPoint
+  - PlayerStart
   layers:
   - Default
   - TransparentFX
@@ -43,6 +45,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: EnemyOutline
+    uniqueID: 515721935
+    locked: 0
+  - name: Platform
+    uniqueID: 261750867
     locked: 0
   m_RenderingLayers:
   - Default

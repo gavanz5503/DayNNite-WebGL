@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         float move = Input.GetAxis("Horizontal");
         rb.linearVelocity = new Vector2(move * moveSpeed, rb.linearVelocity.y);
 
-        if (Input.GetButtonDown("Jump") && jumpCount < maxJumps)
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W)) && jumpCount < maxJumps)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
             jumpCount++;
@@ -29,13 +29,12 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collision came from below (ground/platform)
         foreach (ContactPoint2D contact in collision.contacts)
         {
             if (contact.normal.y > 0.5f)
             {
                 isGrounded = true;
-                jumpCount = 0; // Reset double jump when touching ground
+                jumpCount = 0;
                 break;
             }
         }
@@ -53,6 +52,35 @@ public class PlayerMovement : MonoBehaviour
             transform.parent = null;
         }
 
-        isGrounded = false;
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                isGrounded = false;
+                break;
+            }
+        }
+    }
+
+    public void ResetJump()
+    {
+        jumpCount = 0;
+    }
+
+    public void CheckGrounded()
+    {
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - GetComponent<Collider2D>().bounds.extents.y - 0.05f);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, LayerMask.GetMask("Platform", "Default"));
+
+        if (hit.collider != null)
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 }
+

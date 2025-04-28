@@ -26,4 +26,3 @@ public class GemCounterUI : MonoBehaviour
         counterText.text = collectedGems + " / " + totalGems + " Gems Collected";
     }
 }
-
